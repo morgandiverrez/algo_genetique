@@ -1,11 +1,8 @@
 import numpy as np 
 
+from .constantes import *
 from .lieu import Lieu
 from random import uniform  
-
-LARGEUR  = 800
-HAUTEUR  = 600
-NB_LIEUX = 5
 
 class Graph:
 
@@ -18,7 +15,7 @@ class Graph:
     # Remplissage aléatoire de la liste des lieux
     for i in range(NB_LIEUX):
       # Création des attributs des différents lieux 
-      nom = 'lieu_' + str(i+1)
+      nom = str(i)
       x   = uniform(0, LARGEUR)
       y   = uniform(0, HAUTEUR)
       # Création des lieux et ajout dans la liste 
@@ -26,6 +23,13 @@ class Graph:
       self.__list_lieux.append(l)
     # Calcul Matrice OD
     self.calcul_matrice_cout_od()
+
+  # Getters 
+  def get_list(self):
+    return self.__list_lieux
+
+  def get_distance(self, origine, destination):
+    return self.__matrice_od[origine][destination]
 
   # Méthodes 
   def calcul_matrice_cout_od(self):
