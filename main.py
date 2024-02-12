@@ -11,6 +11,6 @@ if __name__ == '__main__':
     r2 = Route(g)
     r2.generer_route_aleatoire()
 
-    print(repr(g))
-    print(repr(r1))
-    print(repr(r2))
+    root = tk.Tk()
+    affichage = Affichage(root, g)
+    root.mainloop()

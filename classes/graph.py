@@ -78,7 +78,7 @@ class Graph:
     output += '\nMatrice Od : \n'
     for ligne in self.__matrice_od:
       for i, distance in enumerate(ligne):
-        output += str(distance)
+        output += str(round(distance, 2))
         if i < NB_LIEUX - 1:
           output += '\t'
       output += '\n'
