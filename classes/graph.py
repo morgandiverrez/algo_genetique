@@ -1,4 +1,6 @@
-import numpy as np
+import numpy as np 
+
+from .lieu import Lieu
 from random import uniform  
 
 LARGEUR  = 800

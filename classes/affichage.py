@@ -1,3 +1,3 @@
 class Affichage:
 
-    return
+    pass
