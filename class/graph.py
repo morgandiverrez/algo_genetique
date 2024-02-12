@@ -1,31 +1,58 @@
-class Lieu:
+LARGEUR = 800
+HAUTEUR = 600
+NB_LIEUX = 5
 
-  # Constructeur
-  def __init__(self, x, y, nom):
-    # Coordonnées
-    self.__x   = x
-    self.__y   = y
-    # Nom
-    self.__nom = nom
 
-  # Getters
-  def getX(self):
-    return self.__x
+class Graph:
 
-  def getY(self):
-    return self.__y
+    # Constructeur
+    def __init__(self):
+        # Initialisation de la liste vide
+        self.__list_lieux = []
+        # Initialisation de la matrice de destination vide
+        self.__matrice_od = np.zeros((NB_LIEUX, NB_LIEUX))
+        # Remplissage aléatoire de la liste des lieux
+        for i in range(NB_LIEUX):
+            # Création des attributs des différents lieux
+            nom = 'lieu_' + str(i + 1)
+            x = uniform(0, LARGEUR)
+            y = uniform(0, HAUTEUR)
+            # Création des lieux et ajout dans la liste
+            l = Lieu(x, y, nom)
+            self.__list_lieux.append(l)
 
-  def getNom(self):
-    return self.__nom
+    # Méthodes
+    def calcul_matrice_cout_od(self):
+        # Parcours des lieux
+        for origine in range(NB_LIEUX):
+            for destination in range(NB_LIEUX):
+                # Calcul de la distance entre deux lieux
+                distance = 0
+                if origine != destination:
+                    distance = self.__list_lieux[origine].calcul_distance(destination)
+                # Enregistrement de la distance dans la matrice
+                self.__matrice_od[origine][destination] = distance
 
-  # Méthode
-  def calcul_distance(self, destination):
-    # Récupération des coordonnées de la destination
-    x_destination = destination.getX()
-    y_destination = destination.getY()
+    def plus_proche_voisin(self, indice_lieu):
+        # Initialisation des variables de recherche
+        meilleur_voisin = None
+        meilleur_distance = 99999999999
 
-    # Calcul distance au carré x et y
-    dist_x = (x_destination - self.__x)**2
-    dist_y = (y_destination - self.__y)**2
+        # Parcours des voisins
+        for voisin in range(NB_LIEUX):
+            if voisin != indice_lieu:
+                distance = self.__list_lieux[indice_lieu].calcul_distance(voisin)
+                if distance < meilleur_distance:
+                    meilleur_distance = distance
+                    meilleur_voisin = voisin
 
-    return (dist_x + dist_y)**(1/2)
+        # Retourne le meilleur voisin
+        return meilleur_voisin
+
+    def charger_graph(self):
+        # TODO
+        pass
+
+    def charger_matrice_od(self):
+        # TODO
+        pass
