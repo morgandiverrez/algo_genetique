@@ -22,7 +22,7 @@ class Affichage:
         self.graph = graph
 
         # Ligne bleue pointillée représentant la meilleure route trouvée
-        self.meilleure_route = None
+        self.meilleure_route = [0, 2, 4, 3, 1, 0]
 
         # Bind la touche 'ESC' pour quitter le programme
         master.bind('<Escape>', self.quitter_programme)
@@ -44,13 +44,11 @@ class Affichage:
             self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill='blue')
             self.canvas.create_text(x, y, text=lieu.getNom(), fill='white')
 
-    def afficher_meilleure_route(self, indices_lieux):
-        self.meilleure_route = self.canvas.create_line(
-            *self.get_coords_from_indices(indices_lieux), fill='blue', dash=(5, 2))
+
 
     def get_coords_from_indices(self, indices_lieux):
         coords = []
-        lieux  = self.graph.get_list().copy() 
+        lieux= self.graph.get_list().copy()
         for indice in indices_lieux:
             x = lieux[indice].getX()
             y = lieux[indice].getY()
@@ -66,8 +64,8 @@ class Affichage:
         messagebox.showinfo("Matrice de coûts", output)
 
     def afficher_meilleures_routes(self, event):
-        # TODO: Implementer l'affichage des N meilleures routes en gris clair
-        pass
+        self.meilleure_route = self.canvas.create_line(
+            *self.get_coords_from_indices(self.meilleure_route), fill='blue', dash=(5, 2))
 
     def quitter_programme(self, event):
         self.master.destroy()
