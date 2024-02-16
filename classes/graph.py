@@ -43,16 +43,25 @@ class Graph:
         # Enregistrement de la distance dans la matrice
         self.__matrice_od[origine][destination] = distance
         self.__matrice_od[destination][origine] = distance
+
+  def calcul_distance_route(self, parcours):
+        # Initialisation de la distance
+        distance_totale = 0
+        # Ajout de chaque arc
+        for i in range(NB_LIEUX):
+            distance_totale += self.get_distance(parcours[i], parcours[i + 1])
+        # Retourne la distance totale
+        return distance_totale
       
-  def plus_proche_voisin(self, indice_lieu):
+  def plus_proche_voisin(self, indice_lieu, parcours):
     # Initialisation des variables de recherche
     meilleur_voisin   = None
     meilleur_distance = 99999999999
 
     # Parcours des voisins
     for voisin in range(NB_LIEUX):
-      if voisin != indice_lieu:
-        distance = self.__list_lieux[indice_lieu].calcul_distance(voisin)
+      if (voisin != indice_lieu) and (voisin not in parcours):
+        distance = self.__list_lieux[indice_lieu].calcul_distance(self.__list_lieux[voisin])
         if distance < meilleur_distance: 
           meilleur_distance = distance
           meilleur_voisin   = voisin

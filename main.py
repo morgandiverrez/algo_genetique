@@ -1,7 +1,9 @@
-from classes.affichage import *
-from classes.graph     import *
-from classes.lieu      import *
-from classes.route     import *
+import tkinter as tk
+
+from classes.affichage import Affichage
+from classes.graph     import Graph
+from classes.lieu      import Lieu
+from classes.route     import Route
 
 if __name__ == '__main__':
     
