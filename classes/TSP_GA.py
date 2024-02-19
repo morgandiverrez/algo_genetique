@@ -45,21 +45,18 @@ class TSP_GA:
         # Initialisation de la population
         self.__pop = []
         self.initialisation_population()
-        
+
     # Getters 
     def get_meilleure_route(self):
         return self.__meilleure_route
-    
-    def get_distance_meilleure_route(self):
-        return self.__distance_meilleure_route
 
-    # Méthodes 
+    # Méthodes
     def initialisation_population(self):
         # Création d'une à partir de la méthode gloutonne
         r1 = Route(self.__g, methode='glouton')    
         self.__pop.append(r1)             
         # Garde en mémoire la meilleure route     
-        self.__meilleure_route = r1                 
+        self.__meilleure_route = r1
         self.__distance_meilleure_route = r1.getDistanceTotale()
         # Création des autres routes
         points_depart_possibles = [i for i in range(1, NB_LIEUX)]
@@ -97,26 +94,35 @@ class TSP_GA:
                 self.__distance_meilleure_route = distance
 
     def evolution(self):
-        # TODO
-        parent_un   = self.__pop[random.randint(1, NB_LIEUX)]
-        parent_deux = self.__pop[random.randint(1, NB_LIEUX)]
+        pop_sorted = sorted(self.__pop, key=lambda route: route.getDistanceTotale())
+        parent_un= pop_sorted[random.randint(1, NB_LIEUX/2)]
+        parent_deux = pop_sorted[random.randint(1, NB_LIEUX/2)]
         parcours_enfant = croisement(parent_un, parent_deux)
         r = Route(self.__g, parcours=parcours_enfant)
+        r = self.__g.two_opt(r)
         print(repr(parent_un))
         print(repr(parent_deux))
         print(repr(r))
+        return r
 
     def remplacement_population(self, enfants):
         # Fusionne la population parent avec la population enfant
         temp = self.__pop + enfants
         # Tri de la population selon la distance totale
         temp = sorted(temp, key=lambda route: route.get_distance())
-        # Prend les 80% meilleurs 
-
+        # Prend les 80% meilleurs
+        self.__pop = temp[0:NB_LIEUX*0.8]
 
     def main_loop(self):
-        # TODO
-        pass
+        self.initialisation_population()
+        for k in range(100): #critere à definir
+            #on crée la population enfant
+            enfants = []
+            for i in range(NB_LIEUX):
+                 enfants.append(self.evolution())
+            self.remplacement_population(enfants)
+
+
 
     # Opérateurs 
     def __repr__(self):

@@ -7,7 +7,11 @@ from classes.route     import Route
 from classes.TSP_GA    import TSP_GA
 
 if __name__ == '__main__':
-    
-    #g   = Graph()
-    #tsp = TSP_GA(g, 50, 0.2, 0.6, part_alea=0.2)
-    #tsp.evolution()
+    g = Graph()
+    root = tk.Tk()
+    tsp_ga = TSP_GA(g ,800, 0.5,0.5)
+    affichage = Affichage(root, g, tsp_ga)
+    root.mainloop()
+    tsp_ga.main_loop()
+
+

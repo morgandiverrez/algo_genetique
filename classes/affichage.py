@@ -9,7 +9,7 @@ from .constantes import *
 
 
 class Affichage:
-    def __init__(self, master, graph):
+    def __init__(self, master, graph, tsp_ga):
         self.master = master
         self.master.title("Affichage - DIVERREZ Morgan / PINON Aurelien / BARRY Caroline")
 
@@ -20,9 +20,7 @@ class Affichage:
         self.text_area.pack()
 
         self.graph = graph
-
-        # Ligne bleue pointillée représentant la meilleure route trouvée
-        self.meilleure_route = [0, 2, 4, 3, 1, 0]
+        self.tsp_ga = tsp_ga
 
         # Bind la touche 'ESC' pour quitter le programme
         master.bind('<Escape>', self.quitter_programme)
@@ -64,8 +62,8 @@ class Affichage:
         messagebox.showinfo("Matrice de coûts", output)
 
     def afficher_meilleures_routes(self, event):
-        self.meilleure_route = self.canvas.create_line(
-            *self.get_coords_from_indices(self.meilleure_route), fill='blue', dash=(5, 2))
+        self.t  = self.canvas.create_line(
+            *self.get_coords_from_indices(self.tsp_ga.__meilleure_route), fill='blue', dash=(5, 2))
 
     def quitter_programme(self, event):
         self.master.destroy()
