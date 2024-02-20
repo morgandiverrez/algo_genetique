@@ -61,6 +61,20 @@ class Route:
         parcours.append(0) 
         self.__parcours = parcours
 
+    def two_opt(self, graph):
+        amelioration = True
+        while amelioration:
+            amelioration = False
+            for i in range(1, NB_LIEUX - 2):
+                for j in range(i + 1, NB_LIEUX - 1):
+                    distance_actuelle = graph.get_distance(self.__parcours[i], self.__parcours[i+1]) + graph.get_distance(self.__parcours[j], self.__parcours[j+1])
+                    nouvelle_distance = graph.get_distance(self.__parcours[i], self.__parcours[j]) + graph.get_distance(self.__parcours[i+1], self.__parcours[j+1])
+                    if nouvelle_distance < distance_actuelle:
+                        self.swap(i+1, j)
+                        amelioration = True
+
+        self.__distance_totale = graph.calcul_distance_route(self.__parcours)
+
     # Setters
     def swap(self, indice_un, indice_deux):
         # Effectue un swap entre deux élèments
