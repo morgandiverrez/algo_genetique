@@ -52,7 +52,7 @@ class TSP_GA:
         return temp[0:n]
 
     def get_meilleure_route(self):
-        return self.__meilleure_route
+        return  sorted(self.__pop, key=lambda route: route.getDistanceTotale())[0]
 
     # Méthodes
     def initialisation_population(self):

@@ -34,6 +34,9 @@ class Graph:
   def get_distance(self, origine, destination):
     return self.__matrice_od[origine][destination]
 
+  def get_matrice_od(self):
+    return self.__matrice_od
+
   # Méthodes 
   def calcul_matrice_cout_od(self):
     # Parcours des lieux
@@ -76,9 +79,9 @@ class Graph:
     with open(fichier_csv, mode='r') as file:
       csv_reader = csv.reader(file)
       next(csv_reader)
-      for  row in csv_reader:
+      for  i, row in enumerate(csv_reader):
         x, y = row
-        self.__list_lieux.append(Lieu(x = float(x), y = float(y), nom = "nom"))
+        self.__list_lieux.append(Lieu(x = float(x), y = float(y), nom = str(i)))
 
 
   def charger_matrice_od(self, fichier_csv):

@@ -33,6 +33,7 @@ class Affichage:
 
         # Affichage initial des lieux
         self.afficher_lieux()
+        self.afficher_text()
 
     def afficher_lieux(self):
         lieux = self.graph.get_list().copy()
@@ -41,6 +42,15 @@ class Affichage:
             y = lieu.getY()
             self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill='blue')
             self.canvas.create_text(x, y, text=lieu.getNom(), fill='white')
+
+    def afficher_text(self):
+        self.text_area.delete('1.0', tk.END)
+
+        # Récupérer l'évolution des étapes des algorithmes
+        evolution_algo = repr(self.tsp_ga)  # Remplacez ceci par votre méthode d'obtention de l'évolution
+
+        # Afficher l'évolution dans la zone de texte
+        self.text_area.insert(tk.END, evolution_algo)
 
     def get_coords_of_route_from_list_routes(self, list_routes):
         routes_coords = []
@@ -59,16 +69,31 @@ class Affichage:
         return coords
 
     def afficher_matrice_couts(self, event):
-        output = ''
-        for i in range(NB_LIEUX):
-            for j in range(NB_LIEUX):
-                output += str(self.graph.get_distance(i, j)) + ' '
-            output += '\n'
-        messagebox.showinfo("Matrice de coûts", output)
+        # Créer une nouvelle fenêtre pour afficher la matrice de coût
+        fenetre_matrice = tk.Toplevel(self.master)
+        fenetre_matrice.title("Matrice de Coût")
+
+        # Récupérer la matrice de coût
+        matrice_cout = self.graph.get_matrice_od()  # Remplacez ceci par votre méthode d'obtention de la matrice de coût
+
+        # Afficher la matrice de coût dans un tableau dans la nouvelle fenêtre
+        for i in range(len(matrice_cout)):
+            for j in range(len(matrice_cout[i])):
+                label = tk.Label(fenetre_matrice, text=round(matrice_cout[i][j], 1), borderwidth=1, relief="solid", width=10,
+                                 height=2)
+                label.grid(row=i, column=j)
 
     def afficher_meilleures_routes(self, event):
         self.t = self.canvas.create_line(
-            *self.get_coords_of_route_from_list_routes(self.tsp_ga.get_n_meilleures_routes(NB_ROUTES_AFFICHER)), fill='grey', dash=(5, 2))
+            *self.get_coords_of_route_from_list_routes(self.tsp_ga.get_n_meilleures_routes(NB_ROUTES_AFFICHER)), fill='grey', dash=(3, 2))
+        self.canvas.create_line(*self.get_coords_from_route(self.tsp_ga.get_meilleure_route()), fill='blue')
+
+        #afficher ordre passage meilleur route
+        lieux = self.graph.get_list().copy()
+        for i, indice in enumerate(self.tsp_ga.get_meilleure_route().getParcours()):
+            x = lieux[indice].getX()
+            y = lieux[indice].getY()
+            self.canvas.create_text(x+20, y, text=i, fill='blue')
 
     def quitter_programme(self, event):
         self.master.destroy()
