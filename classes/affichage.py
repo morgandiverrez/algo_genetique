@@ -42,6 +42,7 @@ class Affichage:
             y = lieu.getY()
             self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill='blue')
             self.canvas.create_text(x, y, text=lieu.getNom(), fill='white')
+        self.canvas.create_line(*self.get_coords_from_route(self.tsp_ga.get_meilleure_route()), fill='blue')
 
     def afficher_text(self):
         self.text_area.delete('1.0', tk.END)
@@ -86,7 +87,7 @@ class Affichage:
     def afficher_meilleures_routes(self, event):
         self.t = self.canvas.create_line(
             *self.get_coords_of_route_from_list_routes(self.tsp_ga.get_n_meilleures_routes(NB_ROUTES_AFFICHER)), fill='grey', dash=(3, 2))
-        self.canvas.create_line(*self.get_coords_from_route(self.tsp_ga.get_meilleure_route()), fill='blue')
+
 
         #afficher ordre passage meilleur route
         lieux = self.graph.get_list().copy()
