@@ -12,7 +12,7 @@ class Graph:
   def __init__(self):
     # Initialisation de la liste vide 
     self.__list_lieux = []
-    self.charger_graph("data_test/graph_200.csv")
+    self.charger_graph("data_test/graph_{}.csv".format(NB_LIEUX))
     # Initialisation de la matrice de destination vide 
     self.__matrice_od = np.zeros((NB_LIEUX, NB_LIEUX))
     # Remplissage aléatoire de la liste des lieux

@@ -47,6 +47,10 @@ class TSP_GA:
         self.initialisation_population()
 
     # Getters 
+    def get_n_meilleures_routes(self, n):
+        temp = sorted(self.__pop, key=lambda route: route.getDistanceTotale())
+        return temp[0:n]
+
     def get_meilleure_route(self):
         return self.__meilleure_route
 
@@ -109,7 +113,7 @@ class TSP_GA:
         # Fusionne la population parent avec la population enfant
         temp = self.__pop + enfants
         # Tri de la population selon la distance totale
-        temp = sorted(temp, key=lambda route: route.get_distance())
+        temp = sorted(temp, key=lambda route: route.getDistanceTotale())
         # Prend les 80% meilleurs
         self.__pop = temp[0:NB_LIEUX*0.8]
 
@@ -121,7 +125,6 @@ class TSP_GA:
             for i in range(NB_LIEUX):
                  enfants.append(self.evolution())
             self.remplacement_population(enfants)
-
 
 
     # Opérateurs 

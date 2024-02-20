@@ -42,12 +42,17 @@ class Affichage:
             self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill='blue')
             self.canvas.create_text(x, y, text=lieu.getNom(), fill='white')
 
+    def get_coords_of_route_from_list_routes(self, list_routes):
+        routes_coords = []
+        for route in list_routes[1:]:
+            coords_of_route = self.get_coords_from_route(route)
+            routes_coords.extend(coords_of_route)
+        return routes_coords
 
-
-    def get_coords_from_indices(self, indices_lieux):
+    def get_coords_from_route(self, route):
         coords = []
-        lieux= self.graph.get_list().copy()
-        for indice in indices_lieux:
+        lieux = self.graph.get_list().copy()
+        for indice in route.getParcours():
             x = lieux[indice].getX()
             y = lieux[indice].getY()
             coords.extend((x, y))
@@ -62,8 +67,8 @@ class Affichage:
         messagebox.showinfo("Matrice de coûts", output)
 
     def afficher_meilleures_routes(self, event):
-        self.t  = self.canvas.create_line(
-            *self.get_coords_from_indices(self.tsp_ga.__meilleure_route), fill='blue', dash=(5, 2))
+        self.t = self.canvas.create_line(
+            *self.get_coords_of_route_from_list_routes(self.tsp_ga.get_n_meilleures_routes(NB_ROUTES_AFFICHER)), fill='grey', dash=(5, 2))
 
     def quitter_programme(self, event):
         self.master.destroy()
