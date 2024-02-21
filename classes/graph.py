@@ -15,7 +15,7 @@ class Graph:
     self.__matrice_od = np.zeros((NB_LIEUX, NB_LIEUX))
     # Si un graphe a été fourni en entrée alors on le charge
     if charger_graph != None:
-      self.charger_graph("data_test/graph_{}.csv".format(NB_LIEUX))
+      self.charger_graph("data_test/csv/graph_{}.csv".format(NB_LIEUX))
     # Sinon on en créé un aléatoirement
     else:
       # Remplissage aléatoire de la liste des lieux
@@ -26,7 +26,7 @@ class Graph:
         y   = uniform(0, HAUTEUR)
         # Création des lieux et ajout dans la liste 
         l = Lieu(x, y, nom)
-        self.__list_lieux.append(l)
+        self._list_lieux.append(l)
     # Calcul Matrice OD
     self.calcul_matrice_cout_od()
 
@@ -36,7 +36,9 @@ class Graph:
 
   def get_distance(self, origine, destination):
     return self.__matrice_od[origine][destination]
-
+  
+  def get_matrice_od(self):
+    return self.__matrice_od
   # Méthodes 
   def calcul_matrice_cout_od(self):
     # Parcours des lieux

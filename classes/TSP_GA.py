@@ -204,7 +204,6 @@ class TSP_GA:
             else:
                 self.__nombre_iteration_sans_amelioration += 1
             self.__nombre_iteration += 1
-            print(self.__nombre_iteration)
             root.update()
         root.mainloop()
 
