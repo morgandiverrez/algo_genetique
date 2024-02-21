@@ -87,7 +87,7 @@ class Affichage:
     def afficher_meilleures_routes(self, event):
         self.t = self.canvas.create_line(
             *self.get_coords_of_route_from_list_routes(self.tsp_ga.get_n_meilleures_routes(NB_ROUTES_AFFICHER)), fill='grey', dash=(5, 2))
-        self.update_tsp_ga()
+        
     def afficher_la_meilleure_route(self):
         self.t = self.canvas.create_line(
             *self.get_coords_from_route(self.tsp_ga.get_meilleure_route()), fill='blue', tags='route')
